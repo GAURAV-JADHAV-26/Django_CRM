@@ -5,9 +5,18 @@ from django.contrib import messages
 #import registration form
 from .forms import SignUpForm
 
+#import for record showing
+from .models import Record
+
 # Create your views here.
 
 def home(request):
+
+    #Take all records
+    records = Record.objects.all();
+
+
+
     # Check to see if logging in
 
     if request.method == 'POST':
@@ -25,7 +34,7 @@ def home(request):
             return redirect('home')
 
     else:
-        return render(request, 'home.html', {}) #reply to user's request
+        return render(request, 'home.html', {'records': records}) #reply to user's request
 
 
 def logout_user(request):
