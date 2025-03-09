@@ -13,3 +13,6 @@ cursorObject.execute('CREATE DATABASE JRM_DB')
 print("DB Created !")
 
 # admin : Admin
+# Step1 : view : def something(request): #code      IN views.py
+# Step2 : .html
+# Step3 : Url : urls.py
