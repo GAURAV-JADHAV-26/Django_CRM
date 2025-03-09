@@ -8,12 +8,15 @@ from .forms import SignUpForm
 #import for record showing
 from .models import Record
 
+#import for record creation
+from .forms import AddRecordForm
+
 # Create your views here.
 
 def home(request):
 
     #Take all records
-    records = Record.objects.all();
+    records = Record.objects.all()
 
 
 
@@ -72,9 +75,9 @@ def customer_record(request, pk):
     if request.user.is_authenticated :
          #Lookup the record
 
-         customer_record = Record.objects.get(id=pk)
+        customer_record = Record.objects.get(id=pk)
 
-         return render(request, 'record.html', { 'customer_record': customer_record } )
+        return render(request, 'record.html', { 'customer_record': customer_record } )
 
     else:
         #Unauthorized access
@@ -93,3 +96,26 @@ def delete_record(request, pk):
     else:
         messages.success(request, "You Must Be Logged In To Do That Action")
         return redirect('home')
+
+
+def add_record(request):
+        
+    form = AddRecordForm(request.POST or None)
+
+    if request.user.is_authenticated:
+
+        if request.method == "POST":
+
+            if form.is_valid():
+
+                add_record = form.save()
+                messages.success(request, "Record Added Successfully")
+                return redirect('home')
+
+        return render(request, 'add_record.html', {'form': form} )
+    
+
+    else:
+        messages.success(request, "You Must Be Logged In To Do That Action")
+        return redirect('home')
+
